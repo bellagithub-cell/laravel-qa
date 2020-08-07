@@ -24,4 +24,14 @@ class Question extends Model
         // slug ini akan simpen title namun dengan format slug
     }
 
+    public function getUrlAttribute(){
+        return route("questions.show", $this->id);
+    }
+
+    public function getCreatedDateAttribute(){
+        // karena ingin kasih tau created datenya 4 hari yg lalu
+        // atau 16 hari yg lalu
+        return $this->created_at->diffForHumans();
+    }
+
 }

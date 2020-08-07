@@ -14,11 +14,28 @@ class QuestionsController extends Controller
      */
     public function index()
     {
+        // kita harus enable DB log buat analysis
+        // \DB::enableQueryLog();
+
         //define variable untuk hold question
-        $questions = Question::latest()->paginate(5);
+        // $questions = Question::latest()->paginate(10);
         // nampilin 5 question per page yg latest
 
+        //buat jadiin dia eager loader
+        $questions = Question::with('user')->latest()->paginate(10);
+
+
+        // gk perlu return
         return view('questions.index', compact('questions'));
+
+        // tinggal tambah 
+        // render methods return string contain of the \view
+        // view bakal di compile tp gk di render di browser
+        // view('questions.index', compact('questions'))->render();
+
+        // we can clearly log by calling
+        // dd(\DB::getQueryLog());
+        // pass it in dd helper
     }
 
     /**
