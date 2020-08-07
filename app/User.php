@@ -36,4 +36,17 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // define relationship method
+    public function question(){
+
+        return $this->hasMany(Question::class);
+    }
+
+    // buat mutator untuk question
+    public function setTitleAttribute($value){
+        $this->attribute['title'] = $value;
+        $this->attribute['slug'] = Str::slug($value);
+        // slug ini akan simpen title namun dengan format slug
+    }
 }
