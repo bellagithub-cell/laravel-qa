@@ -38,15 +38,10 @@ class User extends Authenticatable
     ];
 
     // define relationship method
-    public function question(){
+    public function questions(){
 
         return $this->hasMany(Question::class);
     }
 
-    // buat mutator untuk question
-    public function setTitleAttribute($value){
-        $this->attribute['title'] = $value;
-        $this->attribute['slug'] = Str::slug($value);
-        // slug ini akan simpen title namun dengan format slug
-    }
+   
 }
