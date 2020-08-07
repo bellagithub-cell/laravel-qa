@@ -20,3 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// karena kita gk cuma get, tp post, delete dll jadi pakai
+Route::resource('questions', 'QuestionsController');
+// ini akan di handle oleh questionscontroller
