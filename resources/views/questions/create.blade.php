@@ -23,7 +23,7 @@
                         <label for="question-title">
                             Question Title
                         </label>
-                        <input type="text" name="title" id="question-title" class=" {{ $errors->has('title') ? 'is-invalid' : '' }} ">
+                    <input type="text" name="title" value="{{ old('title') }}" id="question-title" class=" form-control {{ $errors->has('title') ? 'is-invalid' : '' }} ">
                         
                         {{-- validation input --}}
                         {{-- if it found error message for title input, we'll show something and remember errors --}}
@@ -38,7 +38,7 @@
                         <label for="question-body">
                             Explain your Question
                         </label>
-                        <textarea name="body" id="question-body" cols="30" rows="10" class="form-control {{ $errors->has('body') ? 'is-invalid' : '' }} "></textarea>
+                        <textarea name="body" id="question-body" cols="30" rows="10" class="form-control {{ $errors->has('body') ? 'is-invalid' : '' }} "> {{ old('body') }} </textarea>
                         @if($errors->has('body'))
                             {{-- show message --}}
                             <div class="invalid-feedback">
