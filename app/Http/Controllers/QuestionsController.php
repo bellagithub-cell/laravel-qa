@@ -45,7 +45,13 @@ class QuestionsController extends Controller
      */
     public function create()
     {
-        //
+        //buat add question
+
+        //define buat nampung question object
+        $question = new Question();
+
+        return view('questions.create', compact('question'));
+
     }
 
     /**
