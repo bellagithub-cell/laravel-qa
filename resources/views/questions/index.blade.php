@@ -8,10 +8,10 @@
                 <div class="card-header">
                     <div class="d-flex align-items-center">
                         {{-- kelas d-flex ini  buat the content of both sides in the same base line --}}
-                        <h2>ALl Questions</h2>
+                        <h2>ALL Questions</h2>
                         <div class="ml-auto">
                             {{-- will be positioned in the right --}}
-                            <a href="{{ route('questions.create') }}"  class="btn btn-outline-secondary">All Questions</a>
+                            <a href="{{ route('questions.create') }}"  class="btn btn-outline-secondary">Ask Questions</a>
                         </div>
                     </div>
                 </div>
