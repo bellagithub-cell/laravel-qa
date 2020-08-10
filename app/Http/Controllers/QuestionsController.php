@@ -108,7 +108,14 @@ class QuestionsController extends Controller
         // mirip kaya gini sebeneranya fungsi yg Question $question
         // cuma lebih di pendekin aja 
 
+        // implement gate buat authorize user
+        if(\Gate::denies('update-question', $question)){
+            abort(403, "Access Denied");
+        }
+        // kalau user authorize perubahan, return ini
         return view("questions.edit", compact('question'));
+
+        
 
     }
 
@@ -122,6 +129,11 @@ class QuestionsController extends Controller
     public function update(AskQuestionRequest $request, Question $question)
     {
         //
+         // implement gate buat authorize user
+         if(\Gate::denies('update-question', $question)){
+            abort(403, "Access Denied");
+        }
+        
         $question->update($request->only('title', 'body'));
 
         // redirect jan lupa
@@ -136,6 +148,12 @@ class QuestionsController extends Controller
      */
     public function destroy(Question $question)
     {
+        
+         // implement gate buat authorize user
+         if(\Gate::denies('delete-question', $question)){
+            abort(403, "Access Denied");
+        }
+
         // buat hapus question broo
         $question->delete();
 
