@@ -25,7 +25,7 @@ class Question extends Model
     }
 
     public function getUrlAttribute(){
-        return route("questions.show", $this->id);
+        return route("questions.show", $this->slug);
     }
 
     public function getCreatedDateAttribute(){
@@ -44,6 +44,15 @@ class Question extends Model
             return "answered";
         }
         return "unanswered";
+    }
+
+    // acesor buat nampilin question body
+    public function getBodyHtmlAttribute(){
+        // convert mardown syntax to html
+        return \Parsedown::instance()->text($this->body);
+
+        // $markdown = new CommonMarkConverter(['allow_unsafe_links' => false]);
+        // return $markdown->convertToHtml($this->body);
     }
 
 }

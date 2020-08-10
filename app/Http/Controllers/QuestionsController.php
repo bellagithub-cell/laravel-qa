@@ -81,7 +81,14 @@ class QuestionsController extends Controller
      */
     public function show(Question $question)
     {
-        //
+        // buat check question body 
+        // dd($question->body);
+
+        // increment number of view, lebih easy cuma satu line
+        $question->increment('views');
+
+        return view('questions.show', compact('question'));
+
     }
 
     /**

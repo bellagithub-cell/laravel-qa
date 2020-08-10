@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
+use App\Question;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -30,7 +31,16 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //bind costum route
+        Route::bind('slug', function($slug){
+            // jadi fungsi ini untuk cocokin slug mana yg ada di database cocok sama parameter yg kita kirim
+           $question =  Question::where('slug', $slug)->first();
+        //    kalau gk ada di database kasih error kalau ada kirim isinya
+           return $question ? $question : abort(404);
+        });
+        // The first argument is argument slug
+        // and in second argument we can define a closure or anonymous function
+        // which receive one argument let's call it slug.
 
         parent::boot();
     }
