@@ -129,6 +129,9 @@ class QuestionsController extends Controller
      */
     public function destroy(Question $question)
     {
-        //
+        // buat hapus question broo
+        $question->delete();
+
+        return redirect('questions')->with('success', "Your question has been deleted.");
     }
 }
