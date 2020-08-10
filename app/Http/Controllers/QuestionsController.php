@@ -90,9 +90,19 @@ class QuestionsController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function edit(Question $question)
+
+    //  dengan adanya Question $question, si Question otomatis
+    // inject model question(beserta id)
+    // get id lah dah tuh kaya parameter
+    public function edit(Question $question) // $id
     {
-        //
+        //jadi di uri kan ada id question
+        // $question = Question::findOrFail($id);
+        // mirip kaya gini sebeneranya fungsi yg Question $question
+        // cuma lebih di pendekin aja 
+
+        return view("questions.edit", compact('question'));
+
     }
 
     /**
@@ -102,9 +112,13 @@ class QuestionsController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update(AskQuestionRequest $request, Question $question)
     {
         //
+        $question->update($request->only('title', 'body'));
+
+        // redirect jan lupa
+        return redirect('/questions')->with('success', "Your question has been updated.");
     }
 
     /**
