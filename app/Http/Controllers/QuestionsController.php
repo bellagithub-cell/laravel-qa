@@ -8,6 +8,12 @@ use App\Http\Requests\AskQuestionRequest;
 
 class QuestionsController extends Controller
 {
+    // kita buat constructor ( yg pertama kali jalan ketika di run)
+    // buat auth user, supaya gk sembarang orang yg belum login bisa create question
+    public function __construct(){
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -108,6 +114,9 @@ class QuestionsController extends Controller
         // mirip kaya gini sebeneranya fungsi yg Question $question
         // cuma lebih di pendekin aja 
 
+        // authorize action using policy
+        $this->authorize("update", $question);
+
         return view("questions.edit", compact('question'));
 
     }
@@ -121,6 +130,9 @@ class QuestionsController extends Controller
      */
     public function update(AskQuestionRequest $request, Question $question)
     {
+        // authorized user question using policy
+        $this->authorize("update", $question);
+
         //
         $question->update($request->only('title', 'body'));
 
@@ -136,6 +148,9 @@ class QuestionsController extends Controller
      */
     public function destroy(Question $question)
     {
+        // authorized user question using policy
+        $this->authorize("delete", $question);
+        
         // buat hapus question broo
         $question->delete();
 
