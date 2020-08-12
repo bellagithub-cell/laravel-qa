@@ -34,7 +34,7 @@ class RouteServiceProvider extends ServiceProvider
         //bind costum route
         Route::bind('slug', function($slug){
             // jadi fungsi ini untuk cocokin slug mana yg ada di database cocok sama parameter yg kita kirim
-           $question =  Question::where('slug', $slug)->first();
+           $question =  Question::with('answers.user')->where('slug', $slug)->first();
         //    kalau gk ada di database kasih error kalau ada kirim isinya
            return $question ? $question : abort(404);
         });
