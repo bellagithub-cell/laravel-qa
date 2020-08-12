@@ -26,4 +26,21 @@ class Answer extends Model
         // return $markdown->convertToHtml($this->body);
     }
 
+    //define boot model 
+    public static function boot(){
+        parent::boot();
+
+        // execute code when answer is created
+        static::created(function ($answer){
+            // echo "Answer created\n";
+            $answer->question->increment('answers_count');
+            // $answer->question->save();
+        });
+
+        // static::saved(function ($answer){
+        //     echo "Answer saved\n";
+        // });
+
+    }
+
 }
