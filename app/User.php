@@ -50,5 +50,10 @@ class User extends Authenticatable
         // karena belum buat route user
     }
 
+    // define relationship method with answer
+    public function answers(){
+        return $this->hasMany(Answer::class);
+    }
+
    
 }

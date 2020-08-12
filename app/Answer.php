@@ -1,0 +1,29 @@
+<?php
+
+namespace App;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Answer extends Model
+{
+    //define inverse relationship method 
+    public function question(){
+        return $this->belongsTo(Question::class);
+    }
+
+    // define relationship with user
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    // because answer's body written in markdown syntax 
+    // acesor buat nampilin question body
+    public function getBodyHtmlAttribute(){
+        // convert mardown syntax to html
+        return \Parsedown::instance()->text($this->body);
+
+        // $markdown = new CommonMarkConverter(['allow_unsafe_links' => false]);
+        // return $markdown->convertToHtml($this->body);
+    }
+
+}

@@ -70,7 +70,7 @@ class QuestionPolicy
         // we match the id user with id di question
         // disini kita nambahin kalau jawabannya lebih dari 1 
         // maka question gk bisa di removed even sama creator
-        return $user->id === $question->user_id && $question->answers < 1;
+        return $user->id === $question->user_id && $question->answers_count < 1;
     }
 
     /**
