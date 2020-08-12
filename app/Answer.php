@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Answer extends Model
 {
+    // define fillable attribute
+    protected $fillable = ['body', 'user_id'];
+
     //define inverse relationship method 
     public function question(){
         return $this->belongsTo(Question::class);

@@ -28,5 +28,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 // ini dipakai untuk mempercantik routes kita, dia nampilin semuanya kecuali show
 Route::resource('questions', 'QuestionsController')->except('show');
 
+// define route buat handle create answer question
+// bisa seperti ini 
+// Route::post('/questions/{question}/answers', 'AnswersController@store')->name('answers.store');
+// atau bisa seperti ini
+Route::resource('questions.answers', 'AnswersController')->only(['store', 'edit', 'update', 'destroy']);
+
 //define show route manually tp parametersnya aja yg diganti jadi slug
 Route::get('/questions/{slug}', 'QuestionsController@show')->name('questions.show');
