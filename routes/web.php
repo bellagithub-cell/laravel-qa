@@ -46,3 +46,8 @@ Route::post('/questions/{question}/favorites', 'FavoritesController@store')->nam
 
 // root for unfavorite the question
 Route::delete('/questions/{question}/favorites', 'FavoritesController@destroy')->name('questions.unfavorite'); 
+
+
+// root for votes answer and question
+Route::post('/questions/{question}/vote', 'VoteQuestionController');
+// Route::post('/answers/{answer}/vote', 'VoteAnswerController'); 
