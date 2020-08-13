@@ -36,3 +36,7 @@ Route::resource('questions.answers', 'AnswersController')->only(['store', 'edit'
 
 //define show route manually tp parametersnya aja yg diganti jadi slug
 Route::get('/questions/{slug}', 'QuestionsController@show')->name('questions.show');
+
+
+// define root buat accept best annswer button itu loh
+Route::post('/answers/{answer}/accept', 'AcceptAnswerController')->name('answers.accept');

@@ -36,6 +36,13 @@ class AnswerPolicy
         return $user->id === $answer->user_id;
     }
 
+    // auth accept best answer
+    public function accept(User $user, Answer $answer)
+    {
+        // match the current user ID with the user ID that create the question.
+        return $user->id === $answer->question->user_id;
+    }
+
     /**
      * Determine whether the user can delete the model.
      *

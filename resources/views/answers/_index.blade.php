@@ -29,11 +29,33 @@
                                 {{-- ganti fontawesome --}}
                                 <i class="fas fa-caret-down fa-3x"></i>
                             </a>
-                            {{-- mark the question as favorite --}}
-                            <a title="Click this answer as best answer" class="{{ $answer->status }} mt-2">
-                                {{-- ganti fontawesome --}}
-                                <i class="fas fa-check fa-2x"></i>
-                            </a>
+
+                            {{-- check if the current user can accept the answer --}}
+                            @can('accept', $answer)
+                                {{-- mark the question as favorite --}}
+                                <a title="Mark this answer as best answer" class="{{ $answer->status }} mt-2"
+                                onclick="event.preventDefault(); document.getElementById('accept-answer-{{ $answer->id }}').submit();"
+                                    >
+                                    {{-- ganti fontawesome --}}
+                                    <i class="fas fa-check fa-2x"></i>
+                                </a>
+
+                                {{-- form and submit when the creator of the question hit button --}}
+                                <form action="{{ route('answers.accept', $answer->id) }}" method="POST" id="accept-answer-{{ $answer->id }}" style="display:none;">
+                                    @csrf
+                                </form>
+
+                            {{-- show the green check icon to mark this answer as best answer to anyone that see this question. --}}
+                            @else 
+                            {{-- check apakah answer sudah di acc as best answer --}}
+                                @if($answer->is_best)
+                                    {{-- mark the question as favorite --}}
+                                    <a title="The question owner accepted this answer as best answer" class="{{ $answer->status }} mt-2">
+                                            {{-- ganti fontawesome --}}
+                                            <i class="fas fa-check fa-2x"></i>
+                                    </a>
+                                @endif
+                            @endcan
                         </div>
                         <div class="media-body">
                             {!! $answer->body_html !!}
