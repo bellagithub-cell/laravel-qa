@@ -40,6 +40,11 @@ class Answer extends Model
             // $answer->question->save();
         });
 
+        //buat kurangin answer count
+        static::deleted(function ($answer){
+            $answer->question->decrement('answers_count');
+        });
+
         // static::saved(function ($answer){
         //     echo "Answer saved\n";
         // });
