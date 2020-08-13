@@ -7,6 +7,8 @@ use Illuminate\Support\Str;
 
 class Question extends Model
 {
+    use VotableTrait;
+    
     // buat atribut
     protected $fillable = ['title', 'body'];
 
@@ -86,17 +88,6 @@ class Question extends Model
     }
     
 
-    // define inverse relationship method vote answer and question
-    public function votes(){
-        return $this->morphToMany(User::class, 'votable');
-    }
-
-    public function upVotes(){
-        return $this->votes()->wherePivot('vote', 1);
-    }
-
-    public function downVotes(){
-        return $this->votes()->wherePivot('vote', -1);
-    }
+    // pindah kek VotableTrait
 
 }
