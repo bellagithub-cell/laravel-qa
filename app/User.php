@@ -102,5 +102,28 @@ class User extends Authenticatable
         $question->save();
     }
 
+    public function voteAnswer(Answer $answer, $vote){
+        $voteAnswers = $this->voteAnswers();
+        if($voteAnswers->where('votable_id', $answer->id)->exists()){
+            $voteAnswers->updateExistingPivot($answer, ['vote' => $vote]);
+        }
+        else {
+            $voteAnswers->attach($answer, ['vote' => $vote]);
+        }
+
+        // recount number of vote
+        // sum up between the number of votes up and number of votes down and then assigning it to 
+        // votes count column in answer model
+        $answer->load('votes');
+        $downVotes = (int) $answer->downVotes()->sum('vote');
+        $upVotes = (int) $answer->upVotes()->sum('vote');
+
+        // bisa yg seperti dibawah, bisa juga seprti diatas
+        // $upVotes = (int) $answer->votes()->wherePivot('vote', 1)->sum('vote');
+
+        $answer->votes_count = $upVotes + $downVotes;
+        $answer->save();
+    }
+
    
 }

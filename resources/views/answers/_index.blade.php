@@ -17,18 +17,36 @@
                     <div class="media">
                         {{-- vote control --}}
                         <div class="d-flex-column vote-controls">
-                            <a title="This answer is useful" class="vote-up">
+                            <a title="This Answer is useful" class="vote-up {{ Auth::guest() ? 'off' : '' }}"
+                            onclick="event.preventDefault(); document.getElementById('up-vote-answer-{{ $answer->id }}').submit();"
+                                >
                                 {{-- ganti fontawesome --}}
                                 <i class="fas fa-caret-up fa-3x"></i>
                             </a>
+                            {{-- form and submit when the user favorite hit button --}}
+                            <form action="/answers/{{ $answer->id }}/vote" method="POST" id="up-vote-answer-{{ $answer->id }}" style="display:none;">
+                                @csrf
+                                {{-- send a value rpresent a vote up --}}
+                                <input type="hidden" name="vote" value="1">
+                            </form>
+
 
                             {{-- show the number of votes --}}
-                            <div class="votes-count"> 12234</div>
+                            <span class="votes-count"> {{ $answer->votes_count }}</span>
+
                             {{-- vote down the vote --}}
-                            <a  title="This answer is not useful" class="vote-down off">
+                            <a  title="This Answer is not useful" class="vote-down {{ Auth::guest() ? 'off' : '' }}" 
+                            onclick="event.preventDefault(); document.getElementById('down-vote-answer-{{ $answer->id }}').submit();"
+                                >
                                 {{-- ganti fontawesome --}}
                                 <i class="fas fa-caret-down fa-3x"></i>
                             </a>
+                            <form action="/answers/{{ $answer->id }}/vote" method="POST" id="down-vote-answer-{{ $answer->id }}" style="display:none;">
+                                @csrf
+                                {{-- send a value rpresent a vote up --}}
+                                <input type="hidden" name="vote" value="-1">
+                            </form>
+
 
                             {{-- check if the current user can accept the answer --}}
                             @can('accept', $answer)

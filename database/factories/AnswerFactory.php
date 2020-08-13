@@ -12,7 +12,7 @@ $factory->define(App\Answer::class, function (Faker $faker) {
         'body' => $faker->paragraphs(rand(3, 7), true),
         // cara buat user id nya sesuai dengan yg ada di database user
         'user_id' => App\User::pluck('id')->random(),
-        'votes_count' => rand(0, 5),
+        // 'votes_count' => rand(0, 5),
 
 
 
