@@ -40,3 +40,9 @@ Route::get('/questions/{slug}', 'QuestionsController@show')->name('questions.sho
 
 // define root buat accept best annswer button itu loh
 Route::post('/answers/{answer}/accept', 'AcceptAnswerController')->name('answers.accept');
+
+// root for favoriting the question
+Route::post('/questions/{question}/favorites', 'FavoritesController@store')->name('questions.favorite'); 
+
+// root for unfavorite the question
+Route::delete('/questions/{question}/favorites', 'FavoritesController@destroy')->name('questions.unfavorite'); 

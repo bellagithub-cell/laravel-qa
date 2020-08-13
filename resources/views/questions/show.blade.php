@@ -34,13 +34,26 @@
                                 <i class="fas fa-caret-down fa-3x"></i>
                             </a>
                             {{-- mark the question as favorite --}}
-                            <a title="Click to mark as favorite question (CLick again to undo)" class="favorite mt-2 favorited">
+                            <a title="Click to mark as favorite question (CLick again to undo)" 
+                                class="favorite mt-2 {{ Auth::guest() ? 'off' : ($question->is_favorited ? 'favorited' : '' ) }}"
+                                onclick="event.preventDefault(); document.getElementById('favorite-question-{{ $question->id }}').submit();"
+                                >
                                 {{-- ganti fontawesome --}}
                                 <i class="fas fa-star fa-2x"></i>
 
                                 {{-- how many people favorite this question --}}
-                                <span class="favorites-count">123</span>
+                                <span class="favorites-count">{{ $question->favorites_count }}</span>
                             </a>
+
+                            {{-- form and submit when the user favorite hit button --}}
+                            <form action="/questions/{{ $question->id }}/favorites" method="POST" id="favorite-question-{{ $question->id }}" style="display:none;">
+                                @csrf
+
+                                @if($question->is_favorited)
+                                    @method ('DELETE')
+                                @endif
+                            </form>
+
                         </div>
                        <div class="media-body">
                             {{-- karena question body is in markdown syntax --}}
