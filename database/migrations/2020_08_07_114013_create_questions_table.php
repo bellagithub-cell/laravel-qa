@@ -21,7 +21,7 @@ class CreateQuestionsTable extends Migration
             $table->unsignedInteger('views')->default(0); // untuk tau berapa banyak question diliat
             $table->unsignedInteger('answers')->default(0); // untuk tau berapa banyak answer dari question itu
             $table->integer('votes')->default(0); // untuk tau berapa banyak yg vote question
-            $table->unsignedInteger('best_answer_id')->nullable(); // untuk liat best_answer 
+            $table->unsignedBigInteger('best_answer_id')->nullable(); // untuk liat best_answer 
             $table->unsignedBigInteger('user_id'); // untuk tau user yg create question
             $table->timestamps();
 

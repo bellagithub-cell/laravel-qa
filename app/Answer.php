@@ -43,16 +43,16 @@ class Answer extends Model
         //buat kurangin answer count
         static::deleted(function ($answer){
             // update best answer id taro di variable
-            $question = $answer->question;
+            // $question = $answer->question;
 
-            $question->decrement('answers_count');
+            $answer->question->decrement('answers_count');
 
             //cocokin best_answer_id di question model sama
             // id di answer model
-            if($question->best_answer_id === $answer->id){
-                $question->best_answer_id = NULL;
-                $question->save();
-            }
+            // if($question->best_answer_id === $answer->id){
+            //     $question->best_answer_id = NULL;
+            //     $question->save();
+            // }
         });
 
         // static::saved(function ($answer){
