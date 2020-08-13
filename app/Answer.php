@@ -42,7 +42,17 @@ class Answer extends Model
 
         //buat kurangin answer count
         static::deleted(function ($answer){
-            $answer->question->decrement('answers_count');
+            // update best answer id taro di variable
+            $question = $answer->question;
+
+            $question->decrement('answers_count');
+
+            //cocokin best_answer_id di question model sama
+            // id di answer model
+            if($question->best_answer_id === $answer->id){
+                $question->best_answer_id = NULL;
+                $question->save();
+            }
         });
 
         // static::saved(function ($answer){
@@ -55,6 +65,11 @@ class Answer extends Model
         // karena ingin kasih tau created datenya 4 hari yg lalu
         // atau 16 hari yg lalu
         return $this->created_at->diffForHumans();
+    }
+
+    // buat best answer id
+    public function getStatusAttribute(){
+        return $this->id === $this->question->best_answer_id ? 'vote-accepted' : '';
     }
 
 }

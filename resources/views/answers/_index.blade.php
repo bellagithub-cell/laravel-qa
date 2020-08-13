@@ -30,7 +30,7 @@
                                 <i class="fas fa-caret-down fa-3x"></i>
                             </a>
                             {{-- mark the question as favorite --}}
-                            <a title="Click this answer as best answer" class="vote-accepted mt-2">
+                            <a title="Click this answer as best answer" class="{{ $answer->status }} mt-2">
                                 {{-- ganti fontawesome --}}
                                 <i class="fas fa-check fa-2x"></i>
                             </a>
