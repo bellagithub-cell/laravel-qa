@@ -19,80 +19,25 @@
                     <hr>
     
                     <div class="media">
-                        {{-- vote control --}}
-                        <div class="d-flex-column vote-controls">
-                            <a title="This question is useful" class="vote-up {{ Auth::guest() ? 'off' : '' }}"
-                            onclick="event.preventDefault(); document.getElementById('up-vote-question-{{ $question->id }}').submit();"
-                                >
-                                {{-- ganti fontawesome --}}
-                                <i class="fas fa-caret-up fa-3x"></i>
-                            </a>
-                            {{-- form and submit when the user favorite hit button --}}
-                            <form action="/questions/{{ $question->id }}/vote" method="POST" id="up-vote-question-{{ $question->id }}" style="display:none;">
-                                @csrf
-                                {{-- send a value rpresent a vote up --}}
-                                <input type="hidden" name="vote" value="1">
-                            </form>
-
-
-                            {{-- show the number of votes --}}
-                            <span class="votes-count"> {{ $question->votes_count }}</span>
-
-                            {{-- vote down the vote --}}
-                            <a  title="This question is not useful" class="vote-down {{ Auth::guest() ? 'off' : '' }}" 
-                            onclick="event.preventDefault(); document.getElementById('down-vote-question-{{ $question->id }}').submit();"
-                                >
-                                {{-- ganti fontawesome --}}
-                                <i class="fas fa-caret-down fa-3x"></i>
-                            </a>
-                            <form action="/questions/{{ $question->id }}/vote" method="POST" id="down-vote-question-{{ $question->id }}" style="display:none;">
-                                @csrf
-                                {{-- send a value rpresent a vote up --}}
-                                <input type="hidden" name="vote" value="-1">
-                            </form>
-
-                            {{-- mark the question as favorite --}}
-                            <a title="Click to mark as favorite question (CLick again to undo)" 
-                                class="favorite mt-2 {{ Auth::guest() ? 'off' : ($question->is_favorited ? 'favorited' : '' ) }}"
-                                onclick="event.preventDefault(); document.getElementById('favorite-question-{{ $question->id }}').submit();"
-                                >
-                                {{-- ganti fontawesome --}}
-                                <i class="fas fa-star fa-2x"></i>
-
-                                {{-- how many people favorite this question --}}
-                                <span class="favorites-count">{{ $question->favorites_count }}</span>
-                            </a>
-
-                            {{-- form and submit when the user favorite hit button --}}
-                            <form action="/questions/{{ $question->id }}/favorites" method="POST" id="favorite-question-{{ $question->id }}" style="display:none;">
-                                @csrf
-
-                                @if($question->is_favorited)
-                                    @method ('DELETE')
-                                @endif
-                            </form>
-
-                        </div>
+                        {{-- pindah ke view lain --}}
+                        @include('shared._vote', [
+                            'model' => $question
+                        ])
                        <div class="media-body">
                             {{-- karena question body is in markdown syntax --}}
                             {{-- jadi kita buat a new accessor where encapsulates the markdown to html conversion. --}}
                         {!!  $question->body_html !!}
     
-                        {{-- add other info and creation date  of question--}}
-                        <div class="float-right">
-                            {{-- show answer creation date --}}
-                            <span class="text-muted">
-                                Questioned {{ $question->created_date }}</span>
-                            <div class="media mt-2">
-                                <a href="{{ $question->user->url }}" class="pr-2">
-                                    <img src="{{ $question->user->avatar }}">
-                                </a>
-                                <div class="media-body mt-1">
-                                    <a href="{{ $question->user->url }}">
-                                    {{ $question->user->name }} </a>
+                            <div class="row">
+                                <div class="col-4"></div>
+                                <div class="col-4"></div>
+                                <div class="col-4">
+                                    @include('shared._author', [
+                                        'model'=>  $question,
+                                        'label' => 'asked'
+                                    ])
                                 </div>
                             </div>
-                        </div>
                        </div>
                     </div>
                 </div>

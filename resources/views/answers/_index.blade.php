@@ -46,34 +46,6 @@
                                 {{-- send a value rpresent a vote up --}}
                                 <input type="hidden" name="vote" value="-1">
                             </form>
-
-
-                            {{-- check if the current user can accept the answer --}}
-                            @can('accept', $answer)
-                                {{-- mark the question as favorite --}}
-                                <a title="Mark this answer as best answer" class="{{ $answer->status }} mt-2"
-                                onclick="event.preventDefault(); document.getElementById('accept-answer-{{ $answer->id }}').submit();"
-                                    >
-                                    {{-- ganti fontawesome --}}
-                                    <i class="fas fa-check fa-2x"></i>
-                                </a>
-
-                                {{-- form and submit when the creator of the question hit button --}}
-                                <form action="{{ route('answers.accept', $answer->id) }}" method="POST" id="accept-answer-{{ $answer->id }}" style="display:none;">
-                                    @csrf
-                                </form>
-
-                            {{-- show the green check icon to mark this answer as best answer to anyone that see this question. --}}
-                            @else 
-                            {{-- check apakah answer sudah di acc as best answer --}}
-                                @if($answer->is_best)
-                                    {{-- mark the question as favorite --}}
-                                    <a title="The question owner accepted this answer as best answer" class="{{ $answer->status }} mt-2">
-                                            {{-- ganti fontawesome --}}
-                                            <i class="fas fa-check fa-2x"></i>
-                                    </a>
-                                @endif
-                            @endcan
                         </div>
                         <div class="media-body">
                             {!! $answer->body_html !!}
@@ -104,19 +76,11 @@
                                 </div>
                                 {{-- add other info and creation date --}}
                                 <div class="col-4">
-                                    {{-- show answer creation date --}}
-                                    <span class="text-muted">
-                                        Answered {{ $answer->created_date }}
-                                        <div class="media mt-2">
-                                        <a href="{{ $answer->user->url }}" class="pr-2">
-                                            <img src="{{ $answer->user->avatar }}">
-                                        </a>
-                                        <div class="media-body mt-1">
-                                            <a href="{{ $answer->user->url }}">
-                                            {{ $answer->user->name }} </a>
-                                        </div>
-                                        </div>
-                                    </span>
+                                    {{-- pindah ke _author.blade --}}
+                                    @include('shared._author', [
+                                        'model' => $answer,
+                                        'label' => 'answered'
+                                    ])
                                 </div>
                             </div>
 
