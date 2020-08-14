@@ -26,6 +26,11 @@ class Question extends Model
         // slug ini akan simpen title namun dengan format slug
     }
 
+    // // kalau mau cara yg pertama buat atasi malicious
+    // public function setBodyAttribute($value){
+    //     $this->attribute['body'] = clean($value);
+    // }
+
     public function getUrlAttribute(){
         return route("questions.show", $this->slug);
     }
@@ -51,10 +56,13 @@ class Question extends Model
     // acesor buat nampilin question body
     public function getBodyHtmlAttribute(){
         // convert mardown syntax to html
-        return \Parsedown::instance()->text($this->body);
+        // return \Parsedown::instance()->text($this->body);
 
         // $markdown = new CommonMarkConverter(['allow_unsafe_links' => false]);
         // return $markdown->convertToHtml($this->body);
+
+        // buat acesor malicious
+        return clean($this->bodyHtml());
     }
 
 
@@ -89,5 +97,20 @@ class Question extends Model
     
 
     // pindah kek VotableTrait
+
+    // acesor baru buat malicious
+    public function getExcerptAttribute(){
+        // return Str::limit(strip_tags($this->bodyHtml()), 300);
+        // kalau gk mau ribet bisa pakai ini
+        return $this->excerpt(250);
+    }
+
+    private function bodyHtml(){
+        return \Parsedown::instance()->text($this->body);
+    }
+
+    public function excerpt($length){
+        return Str::limit(strip_tags($this->bodyHtml()), $length);
+    }
 
 }

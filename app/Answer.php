@@ -26,7 +26,7 @@ class Answer extends Model
     // acesor buat nampilin question body
     public function getBodyHtmlAttribute(){
         // convert mardown syntax to html
-        return \Parsedown::instance()->text($this->body);
+        return clean(\Parsedown::instance()->text($this->body));
 
         // $markdown = new CommonMarkConverter(['allow_unsafe_links' => false]);
         // return $markdown->convertToHtml($this->body);
