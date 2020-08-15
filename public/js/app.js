@@ -11403,7 +11403,7 @@ __webpack_require__.r(__webpack_exports__);
     update: function update() {
       var _this = this;
 
-      axios.patch("/questions/".concat(this.questionId, "/answers/").concat(this.id), {
+      axios.patch(this.endpoint, {
         body: this.body
       }).then(function (res) {
         // console.log(res);              
@@ -11414,11 +11414,27 @@ __webpack_require__.r(__webpack_exports__);
         // console.log(err.response);
         alert(err.response.data.message);
       });
+    },
+    destroy: function destroy() {
+      var _this2 = this;
+
+      if (confirm('Are you sure?')) {
+        axios["delete"](this.endpoint).then(function (res) {
+          // pas delete sukses, kita perlu remove answer dari DOM 
+          // dan show pesan balik dari servernya
+          $(_this2.$el).fadeOut(500, function () {
+            alert(res.data.message);
+          }); // durasi yg 500
+        });
+      }
     }
   },
   computed: {
     isInvalid: function isInvalid() {
       return this.body.length < 10;
+    },
+    endpoint: function endpoint() {
+      return "/questions/".concat(this.questionId, "/answers/").concat(this.id);
     }
   }
 });

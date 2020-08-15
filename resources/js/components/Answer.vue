@@ -21,7 +21,7 @@ export default {
             this.editing = false;
         },
         update () {
-            axios.patch(`/questions/${this.questionId}/answers/${this.id}`, {
+            axios.patch(this.endpoint, {
                 body: this.body
             })
             .then(res => {  
@@ -34,11 +34,29 @@ export default {
                 // console.log(err.response);
                 alert(err.response.data.message);                
             });
-        },        
+        },  
+          
+        destroy(){
+            if(confirm('Are you sure?')){
+                axios.delete(this.endpoint)
+                .then(res => {
+                    // pas delete sukses, kita perlu remove answer dari DOM 
+                    // dan show pesan balik dari servernya
+                    $(this.$el).fadeOut(500, () =>{
+                        alert(res.data.message);
+                    })
+                    // durasi yg 500
+                });
+            }
+        }
     },
     computed: {
         isInvalid () {
             return this.body.length < 10;
+        },
+
+        endpoint(){
+            return `/questions/${this.questionId}/answers/${this.id}`;
         }
     }
 }
