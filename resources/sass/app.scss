@@ -108,6 +108,11 @@ form.form-delete {
     }  
 }
 
+[v-cloak]{
+    // semua element yg ada ini akan dissaper selama load
+    display: none;
+}
+
 
 
 
