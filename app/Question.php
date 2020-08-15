@@ -68,7 +68,7 @@ class Question extends Model
 
     // define relationship method with answer
     public function answers(){
-        return $this->hasMany(Answer::class);
+        return $this->hasMany(Answer::class)->orderBy('votes_count', 'DESC');
     }
 
     // create method buat ceklik best answer button

@@ -32,16 +32,22 @@ class RouteServiceProvider extends ServiceProvider
     public function boot()
     {
         //bind costum route
-        Route::bind('slug', function($slug){
-            // jadi fungsi ini untuk cocokin slug mana yg ada di database cocok sama parameter yg kita kirim
-           $question =  Question::with('answers.user')->where('slug', $slug)->first();
-        //    kalau gk ada di database kasih error kalau ada kirim isinya
-           return $question ? $question : abort(404);
-        });
-        // The first argument is argument slug
+         // The first argument is argument slug
         // and in second argument we can define a closure or anonymous function
         // which receive one argument let's call it slug.
+        Route::bind('slug', function($slug){
+            // jadi fungsi ini untuk cocokin slug mana yg ada di database cocok sama parameter yg kita kirim
+        //    $question =  Question::with('answers.user')->where('slug', $slug)->first();
+        // //    kalau gk ada di database kasih error kalau ada kirim isinya
+        //    return $question ? $question : abort(404);
 
+        //    untuk sort answer cara pertama
+        // return Question::with(['answers.user', 'answers' =>function ($query){
+        //     $query->orderBy('votes_count', 'DESC');
+        // }])->where('slug', $slug)->first() ?? abort(404);
+        
+        return Question::with('answers.user')->where('slug', $slug)->first() ?? abort(404);
+        });
         parent::boot();
     }
 

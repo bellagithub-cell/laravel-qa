@@ -13,9 +13,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+// diganti tampilan homenya
+Route::get('/', 'QuestionsController@index');
 
 Auth::routes();
 
