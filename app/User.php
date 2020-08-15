@@ -84,7 +84,7 @@ class User extends Authenticatable
     public function voteQuestion(Question $question, $vote){
         $voteQuestions = $this->voteQuestions();
 
-        $this->_vote($voteQuestions, $question, $vote);
+        return $this->_vote($voteQuestions, $question, $vote);
         
         // mon maap diganti jadi DRY
         // if($voteQuestions->where('votable_id', $question->id)->exists()){
@@ -110,7 +110,7 @@ class User extends Authenticatable
 
     public function voteAnswer(Answer $answer, $vote){
         $voteAnswers = $this->voteAnswers();
-        $this->_vote($voteAnswers, $answer, $vote);
+        return $this->_vote($voteAnswers, $answer, $vote);
 
         // dihilangkan, lebih baik pakai DRY
         // if($voteAnswers->where('votable_id', $answer->id)->exists()){
@@ -156,6 +156,8 @@ class User extends Authenticatable
 
         $model->votes_count = $upVotes + $downVotes;
         $model->save();
+
+        return $model->votes_count;
     }
 
    

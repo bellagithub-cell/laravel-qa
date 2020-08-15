@@ -20,9 +20,10 @@
     
                     <div class="media">
                         {{-- pindah ke view lain --}}
-                        @include('shared._vote', [
+                        {{-- @include('shared._vote', [
                             'model' => $question
-                        ])
+                        ]) --}}
+                        <vote :model="{{ $question }}" name="question"></vote>
                        <div class="media-body">
                             {{-- karena question body is in markdown syntax --}}
                             {{-- jadi kita buat a new accessor where encapsulates the markdown to html conversion. --}}
