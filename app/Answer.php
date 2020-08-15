@@ -12,6 +12,8 @@ class Answer extends Model
     // define fillable attribute
     protected $fillable = ['body', 'user_id'];
 
+    protected $appends = ['created_date'];
+
     //define inverse relationship method 
     public function question(){
         return $this->belongsTo(Question::class);

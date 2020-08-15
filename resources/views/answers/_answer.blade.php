@@ -33,10 +33,13 @@
             {{-- add other info and creation date --}}
             <div class="col-4">
                 {{-- pindah ke _author.blade --}}
-                @include('shared._author', [
+                {{-- @include('shared._author', [
                     'model' => $answer,
                     'label' => 'answered'
-                ])
+                ]) --}}
+
+                {{-- add component --}}
+                <user-info :model="{{ $answer }}" label="Answered"></user-info>
             </div>
         </div>
 

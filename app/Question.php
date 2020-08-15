@@ -12,6 +12,8 @@ class Question extends Model
     // buat atribut
     protected $fillable = ['title', 'body'];
 
+    protected $appends = ['created_date'];
+
     // karena banyak question bisa di miliki oleh satu user
     // dan question relate dengan user 
     public function user(){
