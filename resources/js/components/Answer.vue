@@ -28,22 +28,26 @@ export default {
                 // console.log(res);              
                 this.editing = false;
                 this.bodyHtml = res.data.body_html;
-                alert(res.data.message);
+                // alert(res.data.message);
+                this.$toast.success(res.data.message, "Success", { timeout:3000 });
             })
             .catch(err => {
                 // console.log(err.response);
-                alert(err.response.data.message);                
+                this.$toast.error(err.response.data.message, "Error", { timeout:3000 });
+                // alert(err.response.data.message);                
             });
         },  
           
         destroy(){
+            
             if(confirm('Are you sure?')){
                 axios.delete(this.endpoint)
                 .then(res => {
                     // pas delete sukses, kita perlu remove answer dari DOM 
                     // dan show pesan balik dari servernya
                     $(this.$el).fadeOut(500, () =>{
-                        alert(res.data.message);
+                        // alert(res.data.message);
+                        this.$toast.success(res.data.message, "Success", { timeout:3000 });
                     })
                     // durasi yg 500
                 });
