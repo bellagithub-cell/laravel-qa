@@ -12,7 +12,7 @@ class Question extends Model
     // buat atribut
     protected $fillable = ['title', 'body'];
 
-    protected $appends = ['created_date'];
+    protected $appends = ['created_date', 'is_favorited', 'favorites_count'];
 
     // karena banyak question bisa di miliki oleh satu user
     // dan question relate dengan user 

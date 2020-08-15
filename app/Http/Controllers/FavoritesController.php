@@ -18,13 +18,19 @@ class FavoritesController extends Controller
         // attach the question or make it to be favorited by current user 
         $question->favorites()->attach(auth()->id());
 
-        return back();
+        if(request()->expectsJson()){
+            return response()->json(null, 204);
+        }
+        // return back();
     }
 
     // define destroy method
     public function destroy(Question $question){
         $question->favorites()->detach(auth()->id());
 
-        return back();
+        if(request()->expectsJson()){
+            return response()->json(null, 204);
+        }
+        // return back();
     }
 }
