@@ -12,7 +12,7 @@ class Answer extends Model
     // define fillable attribute
     protected $fillable = ['body', 'user_id'];
 
-    protected $appends = ['created_date', 'body_html'];
+    protected $appends = ['created_date', 'body_html', 'is_best'];
 
     //define inverse relationship method 
     public function question(){
