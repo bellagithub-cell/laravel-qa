@@ -48,13 +48,15 @@
             </div>
         </div>
     </div>
-    {{-- bagian answersnya dipindah  --}}
+    {{-- bagian answersnya dipindah 
     @include ('answers._index', [
         'answers' => $question->answers,
         'answersCount' => $question->answers_count,
-    ])
+    ]) --}}
 
     {{-- view baru create answer --}}
+    <answers :answers="{{ $question->answers }}" :count="{{ $question->answers_count }}"></answers>
+    
     @include ('answers._create')
 </div>
 @endsection
