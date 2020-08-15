@@ -48,7 +48,7 @@ export default {
     computed: {
         // auth logic, temporary
         canAccept () {
-            return true;
+            return this.authorize('accept', this.answer);
         },
 
         accepted() {
