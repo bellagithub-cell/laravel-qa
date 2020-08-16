@@ -82,19 +82,44 @@ export default {
         },  
           
         destroy(){
-            
-            if(confirm('Are you sure?')){
-                axios.delete(this.endpoint)
-                .then(res => {
-                    // pas delete sukses, kita perlu remove answer dari DOM 
-                    // dan show pesan balik dari servernya
-                    $(this.$el).fadeOut(500, () =>{
-                        // alert(res.data.message);
-                        this.$toast.success(res.data.message, "Success", { timeout:3000 });
-                    })
-                    // durasi yg 500
-                });
-            }
+            this.$toast.question('Are you sure about that?', "Confirm", {
+                timeout: 20000,
+                close: false,
+                overlay: true,
+                displayMode: 'once',
+                id: 'question',
+                zindex: 999,
+                title: 'Hey',
+                position: 'center',
+                buttons: [
+                    ['<button><b>YES</b></button>', (instance, toast) => {
+                        axios.delete(this.endpoint)
+                        .then(res => {
+                            this.$emit('deleted')
+                            
+                        });
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+
+                    }, true],
+                    ['<button>NO</button>', function (instance, toast) {
+                        instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
+        
+                    }],
+                ]
+            });
+
+            // if(confirm('Are you sure?')){
+            //     axios.delete(this.endpoint)
+            //     .then(res => {
+            //         // pas delete sukses, kita perlu remove answer dari DOM 
+            //         // dan show pesan balik dari servernya
+            //         $(this.$el).fadeOut(500, () =>{
+            //             // alert(res.data.message);
+            //             this.$toast.success(res.data.message, "Success", { timeout:3000 });
+            //         })
+            //         // durasi yg 500
+            //     });
+            // }
         }
     },
     computed: {

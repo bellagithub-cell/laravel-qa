@@ -11536,18 +11536,39 @@ __webpack_require__.r(__webpack_exports__);
     destroy: function destroy() {
       var _this2 = this;
 
-      if (confirm('Are you sure?')) {
-        axios["delete"](this.endpoint).then(function (res) {
-          // pas delete sukses, kita perlu remove answer dari DOM 
-          // dan show pesan balik dari servernya
-          $(_this2.$el).fadeOut(500, function () {
-            // alert(res.data.message);
-            _this2.$toast.success(res.data.message, "Success", {
-              timeout: 3000
-            });
-          }); // durasi yg 500
-        });
-      }
+      this.$toast.question('Are you sure about that?', "Confirm", {
+        timeout: 20000,
+        close: false,
+        overlay: true,
+        displayMode: 'once',
+        id: 'question',
+        zindex: 999,
+        title: 'Hey',
+        position: 'center',
+        buttons: [['<button><b>YES</b></button>', function (instance, toast) {
+          axios["delete"](_this2.endpoint).then(function (res) {
+            _this2.$emit('deleted');
+          });
+          instance.hide({
+            transitionOut: 'fadeOut'
+          }, toast, 'button');
+        }, true], ['<button>NO</button>', function (instance, toast) {
+          instance.hide({
+            transitionOut: 'fadeOut'
+          }, toast, 'button');
+        }]]
+      }); // if(confirm('Are you sure?')){
+      //     axios.delete(this.endpoint)
+      //     .then(res => {
+      //         // pas delete sukses, kita perlu remove answer dari DOM 
+      //         // dan show pesan balik dari servernya
+      //         $(this.$el).fadeOut(500, () =>{
+      //             // alert(res.data.message);
+      //             this.$toast.success(res.data.message, "Success", { timeout:3000 });
+      //         })
+      //         // durasi yg 500
+      //     });
+      // }
     }
   },
   computed: {
@@ -11628,6 +11649,13 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
     this.fetch("/questions/".concat(this.questionId, "/answers"));
   },
   methods: {
+    // parent can sent data tp child through custom properties 
+    // and a child can send data up to the parent through custom events
+    remove: function remove(index) {
+      this.answers.splice(index, 1); // decrement count 
+
+      this.count--;
+    },
     fetch: function fetch(endpoint) {
       var _this = this;
 
@@ -48318,10 +48346,15 @@ var render = function() {
                 _vm._v(" "),
                 _c("hr"),
                 _vm._v(" "),
-                _vm._l(_vm.answers, function(answer) {
+                _vm._l(_vm.answers, function(answer, index) {
                   return _c("answer", {
                     key: answer.id,
-                    attrs: { answer: answer }
+                    attrs: { answer: answer },
+                    on: {
+                      deleted: function($event) {
+                        return _vm.remove(index)
+                      }
+                    }
                   })
                 }),
                 _vm._v(" "),

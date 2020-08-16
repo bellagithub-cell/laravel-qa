@@ -9,7 +9,7 @@
                     <h2>{{ title }}</h2>
                 </div>
                 <hr>
-                <answer v-for="answer in answers" :answer="answer" :key="answer.id">
+                <answer @deleted="remove(index)" v-for="(answer, index) in answers" :answer="answer" :key="answer.id">
 
                 </answer>
                 
@@ -46,6 +46,14 @@ export default {
     },
 
     methods: {
+        // parent can sent data tp child through custom properties 
+        // and a child can send data up to the parent through custom events
+        remove(index){
+            this.answers.splice(index, 1);
+            // decrement count 
+            this.count--;
+        },
+
         fetch(endpoint){
             axios.get(endpoint)
             .then(({ data }) => {
