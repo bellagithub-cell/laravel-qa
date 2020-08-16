@@ -55,7 +55,7 @@
     ]) --}}
 
     {{-- view baru create answer --}}
-    <answers :answers="{{ $question->answers }}" :count="{{ $question->answers_count }}"></answers>
+    <answers :question="{{ $question }}"></answers>
     
     @include ('answers._create')
 </div>

@@ -7,8 +7,16 @@ use App\Question;
 use Illuminate\Http\Request;
 
 class AnswersController extends Controller
-{
-    
+{   
+    // to check user has signedin
+    public function __construct(){
+        $this->middleware('auth')->except('index');
+    }
+
+    // to fecth all answer
+    public function index(Question $question){
+        return $question->answers()->with('user')->simplePaginate(3);
+    }
 
     /**
      * Store a newly created resource in storage.

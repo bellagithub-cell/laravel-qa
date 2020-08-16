@@ -35,7 +35,7 @@ Route::resource('questions', 'QuestionsController')->except('show');
 // bisa seperti ini 
 // Route::post('/questions/{question}/answers', 'AnswersController@store')->name('answers.store');
 // atau bisa seperti ini
-Route::resource('questions.answers', 'AnswersController')->only(['store', 'edit', 'update', 'destroy']);
+Route::resource('questions.answers', 'AnswersController')->only(['store', 'edit', 'update', 'destroy', 'index']);
 
 //define show route manually tp parametersnya aja yg diganti jadi slug
 Route::get('/questions/{slug}', 'QuestionsController@show')->name('questions.show');
