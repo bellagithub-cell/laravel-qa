@@ -33,10 +33,17 @@ class AnswersController extends Controller
         
 
         // kalau valid pass gan
-        $question->answers()->create($request->validate([
+        $answer = $question->answers()->create($request->validate([
             // specifyy validation rules to answer body
             'body' => 'required'
         ]) + ['user_id' => \Auth::id()]);
+
+        if($request->expectsJson()){
+            return response()->json([
+                'message' => "Your answer has been submited succesfully",
+                'answer' => $answer->load('user')
+            ]);
+        }
 
         // back to previous page
         return back()->with('success', "Your answer has been submitted successfully");
