@@ -41,7 +41,6 @@ export default {
     components: {
         Favorite,
         Accept
-
     },
 
     data () {
