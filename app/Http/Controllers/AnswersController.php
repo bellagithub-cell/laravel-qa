@@ -29,9 +29,7 @@ class AnswersController extends Controller
         //karena di route kita include {question}
         // we need to capture the question by specify or type-hint
         // argumen pertama with a question instance
-
-        
-
+        dd($question);
         // kalau valid pass gan
         $answer = $question->answers()->create($request->validate([
             // specifyy validation rules to answer body

@@ -30,7 +30,7 @@ export default {
     props: ['body'],
 
     computed: {
-        preview(){
+        preview () {
             return md.render(this.body);
         }
     },
